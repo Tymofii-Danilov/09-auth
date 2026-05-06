@@ -1,9 +1,10 @@
 import axios from "axios";
-import type { CreateNote, Note } from "../types/note";
+import type { CreateNote, Note, RegisterRequest, User } from "@/types/note";
+import { nextServer } from "./api";
 
 const key = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
-axios.defaults.baseURL = "https://notehub-public.goit.study/api";
+axios.defaults.baseURL = "http://localhost:3000/api";
 axios.defaults.headers.common["Authorization"] = `Bearer ${key}`;
 
 interface Response {
@@ -24,7 +25,7 @@ export async function fetchNotes({
   perPage,
   tag,
 }: FetchNotesProps): Promise<Response> {
-  const response = await axios.get<Response>(`/notes`, {
+  const response = await nextServer.get<Response>(`/notes`, {
     params: {
       search: query,
       page,
@@ -41,16 +42,25 @@ export async function createNote({
   content,
   tag,
 }: CreateNote): Promise<Note> {
-  const response = await axios.post<Note>(`/notes`, { title, content, tag });
+  const response = await nextServer.post<Note>(`/notes`, {
+    title,
+    content,
+    tag,
+  });
   return response.data;
 }
 
 export async function deleteNote(id: string): Promise<Note> {
-  const response = await axios.delete<Note>(`/notes/${id}`);
+  const response = await nextServer.delete<Note>(`/notes/${id}`);
   return response.data;
 }
 
 export async function fetchNoteById(id: string): Promise<Note> {
-  const response = await axios.get<Note>(`/notes/${id}`);
+  const response = await nextServer.get<Note>(`/notes/${id}`);
   return response.data;
+}
+
+export async function register(data: RegisterRequest) {
+  const res = await nextServer.post<User>(`/auth/register`, data);
+  return res.data;
 }
