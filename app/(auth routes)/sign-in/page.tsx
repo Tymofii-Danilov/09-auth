@@ -1,7 +1,35 @@
 "use client";
+import { useRouter } from "next/navigation";
 import css from "./SignInPage.module.css";
+import { useState } from "react";
+import { useAuthStore } from "@/lib/store/authStore";
+import { ApiError } from "next/dist/server/api-utils";
 
 export default function SignIn() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const setUser = useAuthStore((state) => state.setUser);
+
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      const formValues = Object.fromEntries(formData) as LoginRequest;
+      const res = await login(formValues);
+      if (res) {
+        // Записуємо користувача у глобальний стан
+        setUser(res);
+        router.push("/profile");
+      } else {
+        setError("Invalid email or password");
+      }
+    } catch (error) {
+      setError(
+        (error as ApiError).name ??
+          (error as ApiError).message ??
+          "Oops... some error",
+      );
+    }
+  };
+
   return (
     <main className={css.mainContent}>
       <form className={css.form}>

@@ -1,7 +1,20 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { startTransition, useEffect, useState } from "react";
+
 export default function SignLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  useEffect(() => {
+    router.refresh();
+    startTransition(() => {
+      setLoading(false);
+    });
+  }, [router]);
+  return <>{loading ? <div>Loading...</div> : children}</>;
 }

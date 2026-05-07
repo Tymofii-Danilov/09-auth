@@ -1,5 +1,6 @@
 import { Note } from "@/types/note";
 import { nextServer } from "./api";
+import { cookies } from "next/headers";
 
 interface Response {
   notes: Note[];
@@ -29,4 +30,19 @@ export async function fetchNotes({
   });
 
   return response.data;
+}
+
+export async function fetchNoteById(id: string): Promise<Note> {
+  const response = await nextServer.get<Note>(`/notes/${id}`);
+  return response.data;
+}
+
+export async function checkSession() {
+  const cookieStore = await cookies();
+  const res = await nextServer.get("/auth/session", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  return res;
 }

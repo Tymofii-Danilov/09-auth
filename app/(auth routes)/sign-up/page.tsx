@@ -5,26 +5,25 @@ import { useState } from "react";
 import { RegisterRequest } from "@/types/note";
 import { register } from "@/lib/api/clientApi";
 import { ApiError } from "next/dist/server/api-utils";
+import { useAuthStore } from "@/lib/store/authStore";
 
 export default function SignUp() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (formData: FormData) => {
     try {
       const formValues = Object.fromEntries(formData) as RegisterRequest;
       const res = await register(formValues);
       if (res) {
-        router.push("/app/profile");
+        setUser(res);
+        router.push("/profile");
       } else {
         setError("Invalid email or password");
       }
     } catch (error) {
-      setError(
-        (error as ApiError).name ??
-          (error as ApiError).message ??
-          "Oops... some error",
-      );
+      setError((error as ApiError).message ?? "Oops... some error");
     }
   };
 
