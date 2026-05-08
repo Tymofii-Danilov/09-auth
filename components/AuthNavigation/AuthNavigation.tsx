@@ -1,9 +1,11 @@
 "use client";
+
 import Link from "next/link";
 import css from "./AuthNavigation.module.css";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 import { logout } from "@/lib/api/clientApi";
+
 export default function AuthNavigation() {
   const { isAuthenticated, user } = useAuthStore();
   const clearIsAuth = useAuthStore((state) => state.clearIsAuthenticated);
@@ -22,9 +24,13 @@ export default function AuthNavigation() {
           Profile
         </Link>
       </li>
-
       <li className={css.navigationItem}>
-        <p className={css.userEmail}>User email</p>
+        <Link className={css.navigationLink} href="/notes/filter/all">
+          Notes
+        </Link>
+      </li>
+      <li className={css.navigationItem}>
+        <p className={css.userEmail}>{user?.email}</p>
         <button onClick={handleLogout} className={css.logoutButton}>
           Logout
         </button>

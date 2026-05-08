@@ -1,16 +1,7 @@
 "use client";
-import dynamic from "next/dynamic";
-import type { ReactPaginateProps } from "react-paginate";
-import type { ComponentType } from "react";
-import css from "./Pagination.module.css";
 
-const ReactPaginate = dynamic(
-  () =>
-    import("react-paginate").then((mod) => {
-      return (mod.default as any)?.default || mod.default;
-    }),
-  { ssr: false },
-) as ComponentType<ReactPaginateProps>;
+import css from "./Pagination.module.css";
+import ReactPaginate from "react-paginate";
 
 interface PaginationProps {
   totalPages: number;

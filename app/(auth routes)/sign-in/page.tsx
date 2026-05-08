@@ -4,6 +4,7 @@ import css from "./SignInPage.module.css";
 import { useState } from "react";
 import { useAuthStore } from "@/lib/store/authStore";
 import { ApiError } from "next/dist/server/api-utils";
+import { login, LoginRequest } from "@/lib/api/clientApi";
 
 export default function SignIn() {
   const router = useRouter();
@@ -15,7 +16,6 @@ export default function SignIn() {
       const formValues = Object.fromEntries(formData) as LoginRequest;
       const res = await login(formValues);
       if (res) {
-        // Записуємо користувача у глобальний стан
         setUser(res);
         router.push("/profile");
       } else {
@@ -32,7 +32,7 @@ export default function SignIn() {
 
   return (
     <main className={css.mainContent}>
-      <form className={css.form}>
+      <form action={handleSubmit} className={css.form}>
         <h1 className={css.formTitle}>Sign in</h1>
 
         <div className={css.formGroup}>
@@ -63,7 +63,7 @@ export default function SignIn() {
           </button>
         </div>
 
-        <p className={css.error}>error</p>
+        <p className={css.error}>{error}</p>
       </form>
     </main>
   );
