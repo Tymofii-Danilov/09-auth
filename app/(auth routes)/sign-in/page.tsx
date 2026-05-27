@@ -4,7 +4,8 @@ import css from "./SignInPage.module.css";
 import { useState } from "react";
 import { useAuthStore } from "@/lib/store/authStore";
 import { ApiError } from "next/dist/server/api-utils";
-import { login, LoginRequest } from "@/lib/api/clientApi";
+import { login } from "@/lib/api/clientApi";
+import { LoginRequest } from "@/types/user";
 
 export default function SignIn() {
   const router = useRouter();
@@ -63,7 +64,7 @@ export default function SignIn() {
           </button>
         </div>
 
-        <p className={css.error}>{error}</p>
+        {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
   );

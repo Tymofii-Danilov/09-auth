@@ -9,15 +9,7 @@ export default function Header() {
         NoteHub
       </Link>
       <nav aria-label="Main Navigation">
-        <ul className={css.navigation}>
-          <li className={css.navigationItem}>
-            <Link className={css.navigationLink} href="/">
-              Home
-            </Link>
-          </li>
-
-          <AuthNavigation />
-        </ul>
+        <AuthNavigation />
       </nav>
     </header>
   );

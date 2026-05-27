@@ -38,7 +38,7 @@ export default function NotesClient({ tag }: { tag: string }) {
 
   return (
     <>
-      <div className={css.app}>
+      <div className={`container ${css.app}`}>
         <div className={css.toolbar}>
           <SearchBox onSearch={findTasks} />
           {totalPages > 1 && (

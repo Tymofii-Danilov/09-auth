@@ -1,8 +1,15 @@
 export type User = {
-  id: string;
   email: string;
+  username: string;
+  avatar: string;
+};
+
+export type UpdateUserRequest = {
   username?: string;
-  avatar?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  photoUrl?: string;
+};
+
+export type LoginRequest = {
+  email: string;
+  password: string;
 };

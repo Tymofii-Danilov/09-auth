@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function ProfileClient() {
   const user = useAuthStore((state) => state.user);
   return (
-    <div className={css.profileCard}>
+    <>
       <div className={css.header}>
         <h1 className={css.formTitle}>Profile Page</h1>
         <Link href="/profile/edit" className={css.editProfileButton}>
@@ -29,6 +29,6 @@ export default function ProfileClient() {
         <p>Username: {user?.username}</p>
         <p>Email: {user?.email}</p>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,12 +1,6 @@
-import axios from "axios";
 import type { CreateNote, Note, RegisterRequest } from "@/types/note";
 import { nextServer } from "./api";
-import { User } from "@/types/user";
-
-const key = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
-axios.defaults.baseURL = "http://localhost:3000/api";
-axios.defaults.headers.common["Authorization"] = `Bearer ${key}`;
+import { LoginRequest, UpdateUserRequest, User } from "@/types/user";
 
 interface Response {
   notes: Note[];
@@ -84,20 +78,10 @@ export async function logout(): Promise<void> {
   await nextServer.post("/auth/logout");
 }
 
-export type LoginRequest = {
-  email: string;
-  password: string;
-};
-
 export async function login(data: LoginRequest) {
   const res = await nextServer.post<User>("/auth/login", data);
   return res.data;
 }
-
-export type UpdateUserRequest = {
-  username?: string;
-  photoUrl?: string;
-};
 
 export const updateMe = async (payload: UpdateUserRequest) => {
   const res = await nextServer.patch<User>("/users/me", payload);
