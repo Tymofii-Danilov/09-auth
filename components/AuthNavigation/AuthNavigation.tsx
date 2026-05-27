@@ -43,12 +43,17 @@ export default function AuthNavigation() {
         <div className={`${css.dropdown} ${open ? css.open : ""}`}>
           <ul className={css.navigation}>
             <li className={css.navigationItem}>
-              <Link className={css.navigationLink} href="/">
+              <Link
+                onClick={() => setOpen(false)}
+                className={css.navigationLink}
+                href="/"
+              >
                 Home
               </Link>
             </li>
             <li className={css.navigationItem}>
               <Link
+                onClick={() => setOpen(false)}
                 href="/profile"
                 prefetch={false}
                 className={css.navigationLink}
@@ -57,13 +62,23 @@ export default function AuthNavigation() {
               </Link>
             </li>
             <li className={css.navigationItem}>
-              <Link className={css.navigationLink} href="/notes/filter/all">
+              <Link
+                onClick={() => setOpen(false)}
+                className={css.navigationLink}
+                href="/notes/filter/all"
+              >
                 Notes
               </Link>
             </li>
             <li className={css.navigationItem}>
               <p className={css.userEmail}>{user?.email}</p>
-              <button onClick={handleLogout} className={css.logoutButton}>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setOpen(false);
+                }}
+                className={css.logoutButton}
+              >
                 Logout
               </button>
             </li>
@@ -109,12 +124,17 @@ export default function AuthNavigation() {
         <div className={`${css.dropdown} ${open ? css.open : ""}`}>
           <ul className={css.navigation}>
             <li className={css.navigationItem}>
-              <Link className={css.navigationLink} href="/">
+              <Link
+                onClick={() => setOpen(false)}
+                className={css.navigationLink}
+                href="/"
+              >
                 Home
               </Link>
             </li>
             <li className={css.navigationItem}>
               <Link
+                onClick={() => setOpen(false)}
                 href="/sign-in"
                 prefetch={false}
                 className={css.navigationLink}
@@ -124,6 +144,7 @@ export default function AuthNavigation() {
             </li>
             <li className={css.navigationItem}>
               <Link
+                onClick={() => setOpen(false)}
                 href="/sign-up"
                 prefetch={false}
                 className={css.navigationLink}
