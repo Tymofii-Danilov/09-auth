@@ -1,5 +1,5 @@
 import NotesClient from "./Notes.client";
-import { fetchNotes } from "@/lib/api/clientApi";
+import { fetchNotes } from "@/lib/api/serverApi";
 import {
   HydrationBoundary,
   dehydrate,
@@ -38,9 +38,11 @@ export async function generateMetadata({
 export default async function Notes({ params }: NotesProps) {
   const { slug } = await params;
   const queryClient = new QueryClient();
+  const category = slug[0] === "all" ? undefined : slug[0];
   await queryClient.prefetchQuery({
-    queryKey: ["notes", 1, "", slug[0]],
-    queryFn: () => fetchNotes({ query: "", page: 1, perPage: 8, tag: slug[0] }),
+    queryKey: ["notes", 1, "", category],
+    queryFn: () =>
+      fetchNotes({ query: "", page: 1, perPage: 8, tag: category }),
   });
 
   return (

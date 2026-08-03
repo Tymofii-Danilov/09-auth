@@ -1,4 +1,4 @@
-import { fetchNoteById } from "@/lib/api/clientApi";
+import { fetchNoteById } from "@/lib/api/serverApi";
 import {
   dehydrate,
   HydrationBoundary,
@@ -15,7 +15,9 @@ export async function generateMetadata({
   params,
 }: NoteDetailsProps): Promise<Metadata> {
   const { id } = await params;
+  console.log(id);
   const note = await fetchNoteById(id);
+
   return {
     title: `NoteHub - ${note.title}`,
     description: `Note content: ${note.content}`,

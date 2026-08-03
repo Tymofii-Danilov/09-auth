@@ -9,7 +9,7 @@ export const TAGS = [
 export type Tag = (typeof TAGS)[number];
 
 export interface Note {
-  id: string;
+  _id: string;
   title: string;
   content: string;
   tag: Tag;

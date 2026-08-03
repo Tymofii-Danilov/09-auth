@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { api } from "../../api";
 import { parse } from "cookie";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../../_utils/utils";
+import { nextServer } from "@/lib/api/api";
 
 export async function GET() {
   try {
@@ -16,11 +16,15 @@ export async function GET() {
     }
 
     if (refreshToken) {
-      const apiRes = await api.get("auth/session", {
-        headers: {
-          Cookie: cookieStore.toString(),
+      const apiRes = await nextServer.post(
+        "/auth/refresh",
+        {},
+        {
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
         },
-      });
+      );
 
       const setCookie = apiRes.headers["set-cookie"];
 

@@ -20,13 +20,11 @@ export default function NoteForm() {
   const postMutation = useMutation({
     mutationFn: createNote,
     onSuccess: async () => {
+      clearDraft();
       await queryClient.invalidateQueries({
         queryKey: ["notes"],
-        exact: false,
       });
-      clearDraft();
       router.push("/notes/filter/all");
-      router.refresh();
     },
   });
   const { draft, setDraft, clearDraft } = useNoteDraftStore();

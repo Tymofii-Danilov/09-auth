@@ -22,6 +22,8 @@ export default function NoteList({ notes }: NoteListProps) {
   });
 
   const removeNote = (id: string) => {
+    console.log(id);
+
     setDeletingId(id);
     deleteMutation.mutate(id, {
       onSettled: () => {
@@ -32,17 +34,20 @@ export default function NoteList({ notes }: NoteListProps) {
 
   return (
     <ul className={css.list}>
-      {notes.map(({ id, title, content, tag }) => (
-        <li className={css.listItem} key={id}>
+      {notes.map(({ _id, title, content, tag }) => (
+        <li className={css.listItem} key={_id}>
           <h2 className={css.title}>{title}</h2>
           <p className={css.content}>{content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{tag}</span>
-            <Link className={css.link} href={`/notes/${id}`}>
+            <Link className={css.link} href={`/notes/${_id}`}>
               View details
             </Link>
-            <button onClick={() => id && removeNote(id)} className={css.button}>
-              {deletingId === id ? "Processing..." : "Delete"}
+            <button
+              onClick={() => _id && removeNote(_id)}
+              className={css.button}
+            >
+              {deletingId === _id ? "Processing..." : "Delete"}
             </button>
           </div>
         </li>
